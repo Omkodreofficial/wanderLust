@@ -18,17 +18,17 @@
                          alt="listing image">
 
                     <div class="card-body text-start">
-                        <p class="card-text">
-                            <%= listing.description %><br>
-                            &#8377;<%= listing.price.toLocaleString("en-IN") %><br>
-                            <%= listing.location %><br>
-                            <%= listing.country %><br>
-                        </p>
+                        <p class="card-text">Owned by <i><%= listing.owner.username %></i></p>
+                        <p class="card-text"><%= listing.description %></p>
+                        <p class="card-text">&#8377;<%= listing.price.toLocaleString("en-IN") %></p>
+                        <p class="card-text"><%= listing.location %><br></p>
+                        <p class="card-text"><%= listing.country %><br></p>
                     </div>
 
                 </div>
 
                 <!-- Buttons -->
+                <% if(currUser && currUser._id.equals(listing.owner._id)){%>
                 <div class="btns mt-3">
                     <a href="/listing/<%= listing._id %>/new" class="btn btn-danger me-2">Edit</a>
 
@@ -36,44 +36,37 @@
                         <button class="btn btn-dark">Delete</button>
                     </form>
                 </div>
-
-                <hr>
-                <div>
-                    <h4>Leave a Review</h4>
-                    <form action="/listing/<%= listing._id %>/reviews" method="post" novalidate class="needs-validation">
-                        <div class="mb-3">
-                            <label for="rating" class="form-label">Rating</label>
-                            <input name="review[rating]" type="range" min="1" max="5" class="form-range">
-                        </div>
-                        <div class="mb-3">
-                            <label for="comment" class="form-label">Comments</label>
-                            <textarea name="review[comment]" id="comment" class="form-control" cols="30" rows="5" required></textarea>
-                            <div class="invalid-feedback">Please add some comments for review</div>
-                        </div>
-                    <button class="btn btn-outline-dark">submit</button>
-                    </form>
-                </div>
-
-                <hr>
-                <p><b>All Reviews</b></p>
-                <!-- <div class="row">
-                <% for(review of listing.reviews){%>
-                    <div class="card">
-                        <div class="card-body col-6">
-                            <h5 class="card-title">Jane Doe</h5>
-                            <p class="card-text"><%= review.comment %></p>
-                            <p class="card-text"><%= review.rating %></p>
-                        </div>
-                    </div>
                 <% } %>
-                </div> -->
+
+                <hr>
+                <% if(currUser){%>
+                    <div>
+                        <h4>Leave a Review</h4>
+                        <form action="/listing/<%= listing._id %>/reviews" method="post" novalidate class="needs-validation">
+                            <div class="mb-3">
+                                <label for="rating" class="form-label">Rating</label>
+                                <input name="review[rating]" type="range" min="1" max="5" class="form-range">
+                            </div>
+                            <div class="mb-3">
+                                <label for="comment" class="form-label">Comments</label>
+                                <textarea name="review[comment]" id="comment" class="form-control" cols="30" rows="5" required></textarea>
+                                <div class="invalid-feedback">Please add some comments for review</div>
+                            </div>
+                            <button class="btn btn-outline-dark">submit</button>
+                        </form>
+                    </div>
+                    <hr>
+                <% } %>
+
+                
+                <p><b>All Reviews</b></p>
 
                 <div class="row">
                     <% for (let review of listing.reviews) { %>
                         <div class="col-md-6 mb-3">
                             <div class="card h-100 p-2">
                                 <div class="card-body">
-                                    <h5 class="card-title">Jane Doe</h5>
+                                    <h5 class="card-title">@<%= review.author.username %></h5>
                                     <p class="card-text"><%= review.comment %></p>
                                     <p class="card-text">Rating: <%= review.rating %> Stars</p>
                                 </div>
