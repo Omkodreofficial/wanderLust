@@ -101,3 +101,8 @@ body{
     justify-content: flex-start; /* aligns with card start */
     gap: 10px;
 }
+#map{
+    height:400px;
+    width:100%;
+    
+}
