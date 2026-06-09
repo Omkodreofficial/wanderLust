@@ -54,9 +54,9 @@ app.listen(port,(req,res)=>{
     console.log(`server is listining on port ${port}`)
 })
 
-app.get("/",(req,res)=>{
-    res.send("Hi I am Root")
-})
+// app.get("/",(req,res)=>{
+//     res.send("Hi I am Root")
+// })
 
 
 // Session
